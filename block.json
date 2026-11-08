@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "member-snapshot/card",
+	"version": "1.0.0",
+	"title": "Member Snapshot",
+	"category": "widgets",
+	"icon": "id-alt",
+	"description": "Shows the logged-in member their memberships, renewal dates and course progress in one card.",
+	"keywords": [ "memberpress", "learndash", "account", "membership", "courses" ],
+	"textdomain": "member-snapshot",
+	"attributes": {
+		"title": { "type": "string", "default": "" },
+		"showMemberships": { "type": "boolean", "default": true },
+		"showCourses": { "type": "boolean", "default": true }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide" ],
+		"spacing": { "margin": true }
+	},
+	"editorScript": "member-snapshot-editor",
+	"style": "member-snapshot"
+}
