@@ -11,6 +11,7 @@
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       member-snapshot
+ * Domain Path:       /languages
  *
  * @package MemberSnapshot
  */
@@ -25,6 +26,14 @@ require_once MEMBER_SNAPSHOT_DIR . '/includes/sources.php';
 require_once MEMBER_SNAPSHOT_DIR . '/includes/render.php';
 
 /**
+ * Load translations bundled with the plugin (the plugin is not served from WordPress.org).
+ */
+function member_snapshot_load_textdomain() {
+	load_plugin_textdomain( 'member-snapshot', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'member_snapshot_load_textdomain', 0 );
+
+/**
  * Register the stylesheet, the block and the shortcode.
  */
 function member_snapshot_init() {
@@ -37,6 +46,9 @@ function member_snapshot_init() {
 		MEMBER_SNAPSHOT_VERSION,
 		true
 	);
+
+	// Lets the block editor UI strings in assets/editor.js use translations from /languages.
+	wp_set_script_translations( 'member-snapshot-editor', 'member-snapshot', MEMBER_SNAPSHOT_DIR . '/languages' );
 
 	register_block_type(
 		MEMBER_SNAPSHOT_DIR . '/block.json',
