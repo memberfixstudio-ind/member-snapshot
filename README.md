@@ -1,5 +1,7 @@
 # Member Snapshot
 
+[Screenshots and step-by-step setup tutorial](https://memberfix.studio/plugins/member-snapshot/)
+
 **One clean card that shows members what they've paid for and where they are.**
 
 Members of a MemberPress site often can't tell which plan they're on, when it renews or how far through a course they are without clicking through several account tabs. Member Snapshot puts all of that in one card you can drop on any page.
