@@ -45,7 +45,7 @@ function member_snapshot_render( $args ) {
 
 	$name     = $user->first_name ? $user->first_name : $user->display_name;
 	$title    = $args['title'] ? $args['title'] : sprintf( /* translators: %s: member's first name. */ __( 'Welcome back, %s', 'member-snapshot' ), $name );
-	$since    = $user->user_registered ? date_i18n( get_option( 'date_format' ), strtotime( $user->user_registered ) ) : '';
+	$since    = $user->user_registered ? wp_date( get_option( 'date_format' ), strtotime( $user->user_registered . ' UTC' ) ) : '';
 	$account  = member_snapshot_account_url();
 	$date_fmt = get_option( 'date_format' );
 
@@ -92,10 +92,10 @@ function member_snapshot_render( $args ) {
 												esc_html_e( 'Lifetime access, never expires', 'member-snapshot' );
 											} elseif ( $row['renews'] ) {
 												/* translators: %s: renewal date. */
-												printf( esc_html__( 'Renews on %s', 'member-snapshot' ), esc_html( date_i18n( $date_fmt, $row['expires'] ) ) );
+												printf( esc_html__( 'Renews on %s', 'member-snapshot' ), esc_html( wp_date( $date_fmt, $row['expires'] ) ) );
 											} else {
 												/* translators: %s: expiry date. */
-												printf( esc_html__( 'Ends on %s', 'member-snapshot' ), esc_html( date_i18n( $date_fmt, $row['expires'] ) ) );
+												printf( esc_html__( 'Ends on %s', 'member-snapshot' ), esc_html( wp_date( $date_fmt, $row['expires'] ) ) );
 											}
 											?>
 										</span>
