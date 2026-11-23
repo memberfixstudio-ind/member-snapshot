@@ -18,6 +18,18 @@ function member_snapshot_is_lifetime( $date ) {
 }
 
 /**
+ * Title of a membership or course post, with a fallback for deleted or untitled posts.
+ *
+ * @param int    $post_id  Post ID.
+ * @param string $fallback Text to use when the post has no title.
+ * @return string
+ */
+function member_snapshot_post_title( $post_id, $fallback ) {
+	$title = trim( wp_strip_all_tags( get_the_title( $post_id ) ) );
+	return '' !== $title ? $title : $fallback;
+}
+
+/**
  * Active MemberPress memberships for a user.
  *
  * Each row: title, status (active|ending|lifetime), expires (timestamp|null),
@@ -69,7 +81,7 @@ function member_snapshot_memberships( $user_id ) {
 				$started = $created_at ? strtotime( $created_at . ' UTC' ) : 0;
 
 				$by_product[ $product_id ] = array(
-					'title'   => get_the_title( $product_id ),
+					'title'   => member_snapshot_post_title( $product_id, __( 'Membership', 'member-snapshot' ) ),
 					'expires' => $expires,
 					'started' => $started,
 					'renews'  => $renews,
@@ -141,7 +153,7 @@ function member_snapshot_courses( $user_id ) {
 				)
 			);
 			$rows[]   = array(
-				'title'     => get_the_title( $course_id ),
+				'title'     => member_snapshot_post_title( $course_id, __( 'Course', 'member-snapshot' ) ),
 				'url'       => get_permalink( $course_id ),
 				'percent'   => isset( $progress['percentage'] ) ? (int) $progress['percentage'] : 0,
 				'completed' => isset( $progress['completed'] ) ? (int) $progress['completed'] : 0,
