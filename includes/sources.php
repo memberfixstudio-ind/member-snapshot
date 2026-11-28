@@ -122,9 +122,17 @@ function member_snapshot_shape_membership( $row ) {
 		return $row;
 	}
 
+	/**
+	 * Filter how many days before a non-renewing plan ends it is flagged "ending soon" (amber pill).
+	 *
+	 * @param int   $days Number of days. Default 14.
+	 * @param array $row  Membership row.
+	 */
+	$ending_days = max( 0, (int) apply_filters( 'member_snapshot_ending_soon_days', 14, $row ) );
+
 	$days_left       = (int) floor( ( $expires - $now ) / DAY_IN_SECONDS );
 	$row['days']     = max( 0, $days_left );
-	$row['status']   = ( ! $row['renews'] && $days_left <= 14 ) ? 'ending' : 'active';
+	$row['status']   = ( ! $row['renews'] && $days_left <= $ending_days ) ? 'ending' : 'active';
 	$span            = $row['started'] ? max( 1, $expires - $row['started'] ) : 0;
 	$row['progress'] = $span ? (int) round( max( 0, min( 1, ( $expires - $now ) / $span ) ) * 100 ) : 100;
 

@@ -54,6 +54,10 @@ add_filter( 'member_snapshot_courses', function ( $rows, $user_id ) {
 	return $rows;
 }, 10, 2 );
 
+add_filter( 'member_snapshot_ending_soon_days', function () {
+	return 30; // Flag non-renewing plans 30 days out instead of the default 14.
+} );
+
 add_filter( 'member_snapshot_account_url', function () {
 	return home_url( '/account/' );
 } );
